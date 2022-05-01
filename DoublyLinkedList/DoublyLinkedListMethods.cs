@@ -1,70 +1,30 @@
-﻿namespace DoublyLinkedList
+﻿namespace DoublyLinkedList.DoublyLinkedListMethods
 {
-    public  class DoublyLinkedList<T>
+    internal class DoublyLinkedListMethods<T> : DoublyLinkedListStructure.DblyLnkLstStructure<T>
     {
-        private class Node
-        {
-            public Node(T data)
-            {
-                next = null;
-                Data = data;
-            }
-
-            private Node? next;
-            public Node? Next
-            {
-                get { return next; }
-                set { next = value; }
-            }
-
-            public Node? previos;
-            public Node? Previous
-            {
-                get { return previos; }
-                set { previos = value; }
-            }
-            private T data;
-
-            public T Data
-            {
-                get { return data; }
-                set { data = value; }
-            }
-
-        }
-        
-        private Node? head;
-        private Node? tail;
-        int Count;
-        public DoublyLinkedList()
-        {
-            head = null;
-            tail = null;
-            Count = 0;
-        }
         public void AddToEnd(T data)
         {
             Node node = new(data);
 
-            if (Count == 0) { head = node; }
+            if (Count == 0) { Head = node; }
             else
             {
-                tail.Next = node;
-                node.Previous = tail;
+                Tail.Next = node;
+                node.Previous = Tail;
             }
 
-            tail = node;
+            Tail = node;
             Count++;
         }
         public void AddToStart(T data)
         {
             Node node = new(data);
-            Node temp = head;
+            Node temp = Head;
 
-            head = node;
-            head.Next = temp;
-            if (Count == 0) { tail = head; }
-            else { temp.Previous = head; }
+            Head = node;
+            Head.Next = temp;
+            if (Count == 0) { Tail = Head; }
+            else { temp.Previous = Head; }
             Count++;
         }
         public void AddCollection(IEnumerable<T> collection)
@@ -75,7 +35,7 @@
                 Count++;
             }
         }
-        public void AddCollection(DoublyLinkedList<T> list)
+        public void AddCollection(DoublyLinkedListMethods<T> list)
         {
             foreach (var item in list)
             {
@@ -93,7 +53,7 @@
                 }
                 Node node = new(data);
                 int currentIndex = 0;
-                Node currentItem = head;
+                Node currentItem = Head;
                 Node prevItem = null;
                 while (currentIndex < index)
                 {
@@ -119,7 +79,7 @@
             }
 
         }
-        public void InsertCollection(int index, DoublyLinkedList<T> list)
+        public void InsertCollection(int index, DoublyLinkedListMethods<T> list)
         {
             foreach (var item in list)
             {
@@ -136,7 +96,7 @@
         public bool Remove(T data)
         {
             Node previous = null;
-            Node current = head;
+            Node current = Head;
             while (current != null)
             {
                 if (current.Data.Equals(data))
@@ -144,17 +104,17 @@
                     if (previous != null)
                     {
                         previous.Next = current.Next;
-                        if (current.Next == null) { tail = previous; }
-                        else { current.Next.previos = previous; }
+                        if (current.Next == null) { Tail = previous; }
+                        else { current.Next.Previous = previous; }
                         Count--;
                     }
 
                     else
                     {
-                        head = head.Next;
+                        Head = Head.Next;
                         Count--;
-                        if (Count == 0) { tail = null; }
-                        else { head.previos = null; }
+                        if (Count == 0) { Tail = null; }
+                        else { Head.Previous = null; }
                     }
                     return true;
                 }
@@ -167,7 +127,7 @@
         public int FindIndex(T data)
         {
             int index = 0;
-            Node temp = head;
+            Node temp = Head;
             while (temp.Data.Equals(data) == false && temp.Next != null)
             {
                 index++;
@@ -179,7 +139,7 @@
         public void Reverse()
         {
             Node temp = null;
-            Node current = head;
+            Node current = Head;
             while (current != null)
             {
                 temp = current.Previous;
@@ -189,18 +149,18 @@
             }
             if (temp != null)
             {
-                head = temp.Previous;
+                Head = temp.Previous;
             }
         }
         public void SortList()
         {
-            if (head == null)
+            if (Head == null)
             {
                 return;
             }
             else
             {
-                for (Node current = head; current.Next != null; current = current.Next)
+                for (Node current = Head; current.Next != null; current = current.Next)
                 {
                     for (Node index = current.Next; index != null; index = index.Next)
                     {
@@ -221,7 +181,7 @@
         }
         public IEnumerator<T> GetEnumerator()
         {
-            Node? current = head;
+            Node? current = Head;
             while (current != null)
             {
                 yield return current.Data;
@@ -230,7 +190,7 @@
         }
         public void PrintList()
         {
-            Node first = head;
+            Node first = Head;
             while (first != null)
             {
                 Console.Write(first.Data + " ");
