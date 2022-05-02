@@ -1,7 +1,16 @@
-﻿namespace DoublyLinkedList.DoublyLinkedListMethods
+﻿namespace DoublyLinkedList.DoublyLinkedList
 {
-    internal class DoublyLinkedListMethods<T> : DoublyLinkedListStructure.DblyLnkLstStructure<T>
+    internal class DoublyLinkedList<T> : ListNode.DoublyLinkedListNode<T>
     {
+        internal Node? Head;
+        internal Node? Tail;
+        internal int Count;
+        internal DoublyLinkedList()
+        {
+            Head = null;
+            Tail = null;
+            Count = 0;
+        }
         public void AddToEnd(T data)
         {
             Node node = new(data);
@@ -35,7 +44,7 @@
                 Count++;
             }
         }
-        public void AddCollection(DoublyLinkedListMethods<T> list)
+        public void AddCollection(DoublyLinkedList<T> list)
         {
             foreach (var item in list)
             {
@@ -46,7 +55,6 @@
         public void InsertItem(int index, T data)
         {
             {
-                Count++;
                 if (index >= Count || index < 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(index), "The index is out of bounds!");
@@ -79,7 +87,7 @@
             }
 
         }
-        public void InsertCollection(int index, DoublyLinkedListMethods<T> list)
+        public void InsertCollection(int index, DoublyLinkedList<T> list)
         {
             foreach (var item in list)
             {

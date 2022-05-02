@@ -1,4 +1,4 @@
-﻿using DoublyLinkedList.DoublyLinkedListMethods;
+﻿using DoublyLinkedList.DoublyLinkedList;
 namespace DoublyLinkedList.Main
 {
     internal class Test
@@ -6,7 +6,7 @@ namespace DoublyLinkedList.Main
         static void Main() 
         {
             Console.WriteLine("Create two lists of type int:");
-            DoublyLinkedListMethods<int> list1 = new();
+            DoublyLinkedList<int> list1 = new();
 
             //Adding items to a list"
             list1.AddToEnd(15);
@@ -20,7 +20,7 @@ namespace DoublyLinkedList.Main
             list1.PrintList();
 
             //Do the same with the second one and display it
-            DoublyLinkedListMethods<int> list2 = new();
+            DoublyLinkedList<int> list2 = new();
             list2.AddToEnd(40);
             list2.AddToEnd(62);
             list2.AddToStart(71);

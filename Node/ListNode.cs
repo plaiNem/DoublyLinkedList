@@ -1,6 +1,6 @@
 ﻿namespace DoublyLinkedList.ListNode
 {
-    internal class DoublyLinkedListNode<T>
+    internal  class DoublyLinkedListNode<T>
     {
         internal class Node
         {
