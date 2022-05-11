@@ -185,18 +185,17 @@
         }
         public void Reverse()
         {
-            Node temp = null;
-            Node current = Head;
-            while (current != null)
+            Node temp = Head;
+            Node node = temp.Next;
+            temp.Next = null;
+            temp.Previous = node;
+            while(node != null)
             {
-                temp = current.Previous;
-                current.Previous = current.Next;
-                current.Next = temp;
-                current = current.Previous;
-            }
-            if (temp != null)
-            {
-                Head = temp.Previous;
+                node.Previous = node.Next;
+                node.Next = temp;
+                temp = node;
+                node = node.Previous;
+                Head = temp;
             }
         }
         public void SortList()

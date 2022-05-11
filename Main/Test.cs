@@ -48,7 +48,6 @@ namespace DoublyLinkedList.Main
             list1.PrintList();
             //Console.WriteLine(list1.BinarySearch(2));
 
-
             Console.WriteLine($"\nFind the index of number 4 (it is not in the list): {list1.FindIndex(4)}");
             Console.WriteLine($"\nFind the iindex of number 62: {list1.FindIndex(62)}");
         }
