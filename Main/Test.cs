@@ -23,19 +23,16 @@ namespace DoublyLinkedList.Main
             Console.WriteLine();
             DoublyLinkedList<int> list2 = new();
             list2.AddToEnd(40).AddToEnd(62); 
-            list2.AddToStart(71);
-            list2.AddToStart(38);
+            list2.AddToStart(71).AddToStart(38);
             list2.PrintList();
-
-            Console.WriteLine("\n\nLet's insert the first list into the second, starting with index '2' and display the result:");
-            list1.InsertCollection(2, list2);
-            list1.PrintList();
 
             Console.WriteLine("\n\nReverse first list:");
             list1.Reverse();
             list1.PrintList();
 
-           
+            Console.WriteLine("\n\nLet's insert the first list into the second, starting with index '2' and display the result:");
+            list1.InsertCollection(2, list2);
+            list1.PrintList();
 
             Console.WriteLine("\n\nRemove number 40");
             list1.Remove(40);

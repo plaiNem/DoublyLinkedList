@@ -38,19 +38,21 @@
             Count++;
             return this;
         }
-        public void AddCollection(IEnumerable<T> collection)
+        public DoublyLinkedList<T> AddCollection(IEnumerable<T> collection)
         {
             foreach (var item in collection)
             {
                 AddToEnd(item);
             }
+            return this;
         }
-        public void AddCollection(DoublyLinkedList<T> list)
+        public DoublyLinkedList<T> AddCollection(DoublyLinkedList<T> list)
         {
             foreach (var item in list)
             {
                 AddToEnd(item);
             }
+            return this;
         }
         public DoublyLinkedList<T> InsertItem(int index, T data, string message)
         {
@@ -217,36 +219,6 @@
                 }
             }
         }
-        //public int BinarySearch(T data)
-        //{
-        //    Node? midleValue = Head;
-        //    // поиск ноды по середине 
-        //    foreach (T item in this)
-        //    {
-        //        int result = Count / 2;
-        //        if(FindIndex(item) == result)
-        //        {
-        //            midleValue.Data = item;
-        //        }
-        //    }
-        //    int midleIndex = FindIndex(midleValue.Data);
-        //    if (midleValue.Equals(null) || Count < 0) { return -1; }
-           
-        //    if (midleValue.Equals(data)) { return midleIndex; }
-
-        //    else if (Comparer<T>.Default.Compare(midleValue.Data, data) > 0)
-        //    {
-        //        --midleIndex; 
-        //        return BinarySearch(data);
-        //    }
-        //    else
-        //    {
-        //        ++midleIndex;
-
-        //        return BinarySearch(data);
-        //    }
-        //    return -1;
-        //}
         public void Clearlist()
         {
             foreach (T item in this)
