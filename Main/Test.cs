@@ -19,10 +19,12 @@ namespace DoublyLinkedList.Main
             //And finally, let's display the list
             list1.PrintList();
 
-            //Do the same with the second one and display it
             Console.WriteLine();
+
+            //Do the same with the second one and display it
             DoublyLinkedList<int> list2 = new();
-            list2.AddToEnd(40).AddToEnd(62); 
+            //It's possible to write AddToStart/AddToEnd/AddCollection/InsertItem/InsertCollection methods in a chain
+            list2.AddToEnd(40).AddToEnd(62);
             list2.AddToStart(71).AddToStart(38);
             list2.PrintList();
 
@@ -46,7 +48,6 @@ namespace DoublyLinkedList.Main
             Console.WriteLine("\n\nSort list");
             list1.SortList();
             list1.PrintList();
-            //Console.WriteLine(list1.BinarySearch(2));
 
             Console.WriteLine($"\nFind the index of number 4 (it is not in the list): {list1.FindIndex(4)}");
             Console.WriteLine($"\nFind the iindex of number 62: {list1.FindIndex(62)}");
