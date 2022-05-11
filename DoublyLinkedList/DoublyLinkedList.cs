@@ -11,11 +11,11 @@
             Tail = null;
             Count = 0;
         }
-        public void AddToEnd(T data)
+        public DoublyLinkedList<T> AddToEnd(T data)
         {
             Node node = new(data);
 
-            if (Count == 0) { Head = node; }
+            if (Count == 0) { Head = node;  }
             else
             {
                 Tail.Next = node;
@@ -24,8 +24,9 @@
 
             Tail = node;
             Count++;
+            return this;
         }
-        public void AddToStart(T data)
+        public DoublyLinkedList<T> AddToStart(T data)
         {
             Node node = new(data);
             Node temp = Head;
@@ -35,13 +36,13 @@
             if (Count == 0) { Tail = Head; }
             else { temp.Previous = Head; }
             Count++;
+            return this;
         }
         public void AddCollection(IEnumerable<T> collection)
         {
             foreach (var item in collection)
             {
                 AddToEnd(item);
-                Count++;
             }
         }
         public void AddCollection(DoublyLinkedList<T> list)
@@ -49,15 +50,14 @@
             foreach (var item in list)
             {
                 AddToEnd(item);
-                Count++;
             }
         }
-        public void InsertItem(int index, T data)
+        public DoublyLinkedList<T> InsertItem(int index, T data, string message)
         {
             {
                 if (index >= Count || index < 0)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(index), "The index is out of bounds!");
+                    throw new ArgumentOutOfRangeException(nameof(index), message);
                 }
                 Node node = new(data);
                 int currentIndex = 0;
@@ -71,11 +71,11 @@
                 }
                 if (index == 0)
                 {
-                    AddToStart(data);
+                    return AddToStart(data);
                 }
                 else if (index == Count - 1)
                 {
-                    AddToEnd(data);
+                    return AddToEnd(data);
                 }
                 else
                 {
@@ -83,23 +83,27 @@
                     prevItem.Next = node;
                     currentItem.Previous = node;
                     node.Previous = currentItem.Previous;
+                    Count++;
+                    return this;
                 }
             }
 
         }
-        public void InsertCollection(int index, DoublyLinkedList<T> list)
+        public DoublyLinkedList<T> InsertCollection(int index, DoublyLinkedList<T> list)
         {
             foreach (var item in list)
             {
-                InsertItem(index, item);
+                InsertItem(index, item, "The index is out of bounds!");
             }
+            return this;
         }
-        public void InsertCollection(int index, IEnumerable<T> collection)
+        public DoublyLinkedList<T> InsertCollection(int index, IEnumerable<T> collection)
         {
             foreach (var item in collection)
             {
-                InsertItem(index, item);
+                InsertItem(index, item, "The index is out of bounds!");
             }
+            return this;
         }
         public bool Remove(T data)
         {
@@ -127,6 +131,39 @@
                     return true;
                 }
 
+                previous = current;
+                current = current.Next;
+            }
+            return false;
+        }
+        public bool RemoveAt(int index)
+        {
+            int marker = 0;
+            Node previous = null;
+            Node current = Head;
+            while (current != null)
+            {
+                if (marker == index)
+                {
+                    if (previous != null)
+                    {
+                        previous.Next = current.Next;
+                        if (current.Next == null) { Tail = previous; }
+                        else { current.Next.Previous = previous; }
+                        Count--;
+                    }
+
+                    else
+                    {
+                        Head = Head.Next;
+                        Count--;
+                        if (Count == 0) { Tail = null; }
+                        else { Head.Previous = null; }
+                    }
+                    return true;
+                }
+
+                marker++;
                 previous = current;
                 current = current.Next;
             }
@@ -180,6 +217,36 @@
                 }
             }
         }
+        //public int BinarySearch(T data)
+        //{
+        //    Node? midleValue = Head;
+        //    // поиск ноды по середине 
+        //    foreach (T item in this)
+        //    {
+        //        int result = Count / 2;
+        //        if(FindIndex(item) == result)
+        //        {
+        //            midleValue.Data = item;
+        //        }
+        //    }
+        //    int midleIndex = FindIndex(midleValue.Data);
+        //    if (midleValue.Equals(null) || Count < 0) { return -1; }
+           
+        //    if (midleValue.Equals(data)) { return midleIndex; }
+
+        //    else if (Comparer<T>.Default.Compare(midleValue.Data, data) > 0)
+        //    {
+        //        --midleIndex; 
+        //        return BinarySearch(data);
+        //    }
+        //    else
+        //    {
+        //        ++midleIndex;
+
+        //        return BinarySearch(data);
+        //    }
+        //    return -1;
+        //}
         public void Clearlist()
         {
             foreach (T item in this)
