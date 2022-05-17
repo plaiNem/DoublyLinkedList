@@ -11,11 +11,11 @@
             Tail = null;
             Count = 0;
         }
-        public DoublyLinkedList<T> AddToEnd(T data)
+        public DoublyLinkedList<T> Add(T data)
         {
             Node node = new(data);
 
-            if (Count == 0) { Head = node;  }
+            if (Count == 0) { Head = node; }
             else
             {
                 Tail.Next = node;
@@ -40,70 +40,68 @@
         }
         public DoublyLinkedList<T> AddCollection(IEnumerable<T> collection)
         {
-            foreach (var item in collection)
+            foreach (T data in collection)
             {
-                AddToEnd(item);
+                Add(data);
             }
             return this;
         }
         public DoublyLinkedList<T> AddCollection(DoublyLinkedList<T> list)
         {
-            foreach (var item in list)
+            foreach (T data in list)
             {
-                AddToEnd(item);
+                Add(data);
             }
             return this;
         }
-        public DoublyLinkedList<T> InsertItem(int index, T data, string message)
+        public DoublyLinkedList<T> Insert(int index, T data, string message)
         {
-            {
-                if (index >= Count || index < 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(index), message);
-                }
-                Node node = new(data);
-                int currentIndex = 0;
-                Node currentItem = Head;
-                Node prevItem = null;
-                while (currentIndex < index)
-                {
-                    prevItem = currentItem;
-                    currentItem = currentItem.Next;
-                    currentIndex++;
-                }
-                if (index == 0)
-                {
-                    return AddToStart(data);
-                }
-                else if (index == Count - 1)
-                {
-                    return AddToEnd(data);
-                }
-                else
-                {
-                    node.Next = prevItem.Next;
-                    prevItem.Next = node;
-                    currentItem.Previous = node;
-                    node.Previous = currentItem.Previous;
-                    Count++;
-                    return this;
-                }
-            }
 
+            if (index >= Count || index < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index), message);
+            }
+            Node node = new(data);
+            int currentIndex = 0;
+            Node currentItem = Head;
+            Node prevItem = null;
+            while (currentIndex < index)
+            {
+                prevItem = currentItem;
+                currentItem = currentItem.Next;
+                currentIndex++;
+            }
+            if (index == 0)
+            {
+                return AddToStart(data);
+            }
+            else if (index == Count - 1)
+            {
+                return Add(data);
+            }
+            else
+            {
+                node.Next = prevItem.Next;
+                prevItem.Next = node;
+                currentItem.Previous = node;
+                node.Previous = currentItem.Previous;
+                Count++;
+                return this;
+            }
         }
         public DoublyLinkedList<T> InsertCollection(int index, DoublyLinkedList<T> list)
         {
-            foreach (var item in list)
+            foreach (T data in list)
             {
-                InsertItem(index, item, "The index is out of bounds!");
+                Insert(index, data, "The index is out of bounds!");
             }
             return this;
         }
         public DoublyLinkedList<T> InsertCollection(int index, IEnumerable<T> collection)
         {
-            foreach (var item in collection)
+            foreach (T data in collection)
             {
-                InsertItem(index, item, "The index is out of bounds!");
+                Insert(index, data, "The index is out of bounds!");
             }
             return this;
         }
@@ -171,25 +169,32 @@
             }
             return false;
         }
-        public int FindIndex(T data)
+
+        public int IndexOf(T data)
         {
-            int index = 0;
             Node temp = Head;
-            while (temp.Data.Equals(data) == false && temp.Next != null)
+            int index = 0;
+            while (temp != null)
             {
-                index++;
+                if (temp.Data.Equals(data)) return index;
                 temp = temp.Next;
+                index++;
             }
-            if (temp.Data.Equals(data) == false) { return -1; }
-            else { return index; }
+            return -1;
         }
+        public bool Contains(T data)
+        {
+            if (IndexOf(data) == -1) return false;
+            else return true;
+        }
+
         public void Reverse()
         {
             Node temp = Head;
             Node node = temp.Next;
             temp.Next = null;
             temp.Previous = node;
-            while(node != null)
+            while (node != null)
             {
                 node.Previous = node.Next;
                 node.Next = temp;
@@ -198,31 +203,25 @@
                 Head = temp;
             }
         }
-        public void SortList()
+        public void Sort()
         {
-            if (Head == null)
+            for (Node current = Head; current.Next != null; current = current.Next)
             {
-                return;
-            }
-            else
-            {
-                for (Node current = Head; current.Next != null; current = current.Next)
+                for (Node index = current.Next; index != null; index = index.Next)
                 {
-                    for (Node index = current.Next; index != null; index = index.Next)
+                    if (Comparer<T>.Default.Compare(current.Data, index.Data) > 0)
                     {
-                        if (Comparer<T>.Default.Compare(current.Data, index.Data) > 0)
-                        {
-                            (current.Data, index.Data) = (index.Data, current.Data);
-                        }
+                        (current.Data, index.Data) = (index.Data, current.Data);
                     }
                 }
             }
         }
-        public void Clearlist()
+
+        public void Clear()
         {
-            foreach (T item in this)
+            foreach (T data in this)
             {
-                Remove(item);
+                Remove(data);
             }
         }
         public IEnumerator<T> GetEnumerator()
@@ -236,11 +235,11 @@
         }
         public void PrintList()
         {
-            Node first = Head;
-            while (first != null)
+            Node temp = Head;
+            while (temp != null)
             {
-                Console.Write(first.Data + " ");
-                first = first.Next;
+                Console.Write(temp.Data + " ");
+                temp = temp.Next;
             }
         }
     }

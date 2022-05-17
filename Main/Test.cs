@@ -1,20 +1,20 @@
 ﻿using DoublyLinkedList.DoublyLinkedList;
 namespace DoublyLinkedList.Main
 {
-    internal class Test
+    internal static class Test
     {
-        static void Main() 
+        static void Main()
         {
             Console.WriteLine("Create two lists of type int:");
             DoublyLinkedList<int> list1 = new();
 
             //Adding items to a list
-            list1.AddToEnd(15); // head -> 15 <- tail
-            list1.AddToEnd(2); // head -> 15 -> 2 <-tail
+            list1.Add(15); // head -> 15 <- tail
+            list1.Add(2); // head -> 15 <-> 2 <- tail
 
             //Adding items to the beginning of the list
-            list1.AddToStart(96);
-            list1.AddToStart(5);
+            list1.AddToStart(96); // head -> 96 <-> 15 <-> 2 <- tail
+            list1.AddToStart(5);  // head -> 5 <-> 96 <-> 15 <-> 2 <- tail
 
             //And finally, let's display the list
             list1.PrintList();
@@ -24,7 +24,7 @@ namespace DoublyLinkedList.Main
             //Do the same with the second one and display it
             DoublyLinkedList<int> list2 = new();
             //It's possible to write AddToStart/AddToEnd/AddCollection/InsertItem/InsertCollection methods in a chain
-            list2.AddToEnd(40).AddToEnd(62);
+            list2.Add(40).Add(62);
             list2.AddToStart(71).AddToStart(38);
             list2.PrintList();
 
@@ -46,11 +46,13 @@ namespace DoublyLinkedList.Main
             list1.PrintList();
 
             Console.WriteLine("\n\nSort list");
-            list1.SortList();
+            list1.Sort();
             list1.PrintList();
 
-            Console.WriteLine($"\nFind the index of number 4 (it is not in the list): {list1.FindIndex(4)}");
-            Console.WriteLine($"\nFind the iindex of number 62: {list1.FindIndex(62)}");
+            Console.WriteLine($"\n\nContains method returns true if item(number 75 in this case) is in the list: {list1.Contains(75)}");
+
+            Console.WriteLine($"\nFind the index of number 4 (it is not in the list): {list1.IndexOf(4)}");
+            Console.WriteLine($"\nFind the index of number 62: {list1.IndexOf(62)}");
         }
     }
 }
